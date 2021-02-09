@@ -1,6 +1,7 @@
 package com.box.punkapi.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,7 +120,10 @@ class BeerListFragment : Fragment() {
                 val visibleItemCount = recyclerViewManager.childCount
                 val lastVisibleItem = recyclerViewManager.findLastVisibleItemPosition()
                 val newSum = visibleItemCount + lastVisibleItem + 10
+                Log.d("BeerListFragment", "onScrolled:$page <<")
+                if (page == 2) beforeSum = 0
                 if (newSum >= totalItemCount && beforeSum < newSum) {
+                    Log.d("BeerListFragment", "onScrolled:inner <<")
                     viewModel.load(page)
                     beforeSum = newSum
                 }

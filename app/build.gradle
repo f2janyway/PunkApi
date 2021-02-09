@@ -31,8 +31,8 @@ android {
             proguardFile 'proguard-glide.pro'
         }
         debug {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+//            shrinkResources true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard-rules.pro'
             proguardFile 'proguard-common.pro'
