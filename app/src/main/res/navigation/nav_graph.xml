@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_beer_list" >
         <action
             android:id="@+id/action_beerListFragment_to_beerDetailFragment"
-            app:destination="@id/beerDetailFragment" />
+            app:destination="@id/beerDetailFragment"
+            />
+
     </fragment>
     <fragment
         android:id="@+id/beerDetailFragment"

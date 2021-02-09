@@ -1,5 +1,6 @@
 package com.box.punkapi.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.transition.TransitionListenerAdapter
@@ -18,6 +19,7 @@ import com.box.punkapi.model.Beer
 import com.box.punkapi.model.Result
 import com.box.punkapi.ui.BeerListAdapter
 import com.box.punkapi.ui.MainActivity
+import com.google.android.material.transition.MaterialContainerTransform
 
 class BeerListFragment : Fragment() {
 
@@ -35,7 +37,9 @@ class BeerListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        sharedElementReturnTransition = MaterialContainerTransform().apply {
+            duration = 500
+        }
     }
 
 

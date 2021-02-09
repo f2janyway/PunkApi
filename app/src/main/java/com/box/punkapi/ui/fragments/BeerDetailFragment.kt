@@ -1,6 +1,7 @@
 package com.box.punkapi.ui.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -42,9 +43,9 @@ class BeerDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 600
+            duration = 500
+            scrimColor = Color.TRANSPARENT
         }
-
     }
 
     override fun onCreateView(

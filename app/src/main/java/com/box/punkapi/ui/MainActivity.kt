@@ -22,49 +22,65 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.exitTransition = null
+        window.enterTransition = null
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mainViewModel.isLoading.observe(this){
+        mainViewModel.isLoading.observe(this) {
             binding.isLoading = it
         }
         setUpActionBar()
         setGraphViewControl()
     }
-    private fun setUpActionBar(){
+
+    private fun setUpActionBar() {
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.apply {
             title = getString(R.string.app_name)
         }
     }
-    private fun setGraphViewControl(){
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
+
+    private fun setGraphViewControl() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
         navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
 
-            when(destination.id){
-                R.id.beerDetailFragment->{
+            when (destination.id) {
+                R.id.beerDetailFragment -> {
                     supportActionBar?.apply {
+                        overridePendingTransition(
+                            android.R.anim.slide_in_left,
+                            android.R.anim.slide_out_right
+                        )
                         setDisplayHomeAsUpEnabled(true)
+                        title = mainViewModel.selectedBeer.name
+
                     }
                 }
-                R.id.beerListFragment->{
+                R.id.beerListFragment -> {
                     supportActionBar?.apply {
+                        overridePendingTransition(
+                            android.R.anim.slide_in_left,
+                            android.R.anim.slide_out_right
+                        )
                         setDisplayHomeAsUpEnabled(false)
+                        title = getString(R.string.app_name)
                     }
+
                 }
             }
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home->{
+        when (item.itemId) {
+            android.R.id.home -> {
                 onBackPressed()
             }
         }
         return true
     }
-
 
 
 }
