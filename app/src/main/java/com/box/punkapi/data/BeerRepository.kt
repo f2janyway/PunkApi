@@ -26,4 +26,8 @@ class BeerRepository(private val service: PunkService) : RepositoryInterface {
             Result.Error(e)
         }
     }
+
+    override suspend fun resetBeerList() {
+        beerList.clear()
+    }
 }

@@ -1,10 +1,6 @@
 package com.box.punkapi.ui.fragments
 
-import android.graphics.Color
 import android.os.Bundle
-import android.transition.TransitionInflater
-import android.transition.TransitionListenerAdapter
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +50,7 @@ class BeerListFragment : Fragment() {
             viewModel.load(page)
         }
         setObserves()
-
+        setRefreshListener()
         return binding.root
     }
 
@@ -63,13 +59,23 @@ class BeerListFragment : Fragment() {
         setScrollListener()
     }
 
+    private fun setRefreshListener() {
+        binding.refreshLayout.apply {
+            setOnRefreshListener {
+                page = 1
+                viewModel.load(page)
+                viewModel.resetBeerList()
+                isRefreshing = false
+            }
+        }
+    }
+
     private fun setRecyclerView() {
         binding.listRecyclerview.apply {
             adapter = this@BeerListFragment.adapter
             postponeEnterTransition()
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
-
                 true
             }
         }

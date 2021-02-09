@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.box.punkapi.data.BeerRepository
 import com.box.punkapi.model.Beer
 import com.box.punkapi.model.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -23,7 +24,7 @@ class MainViewModel(private val repository: BeerRepository) : ViewModel() {
 
 
     fun load(pageTo: Int) {
-        if(this::loadJob.isInitialized){
+        if (this::loadJob.isInitialized) {
             if (!loadJob.isCompleted) return
         }
         _isLoading.value = true
@@ -36,5 +37,11 @@ class MainViewModel(private val repository: BeerRepository) : ViewModel() {
 
     fun selectBeer(beer: Beer) {
         selectedBeer = beer
+    }
+
+    fun resetBeerList() {
+        viewModelScope.launch(Dispatchers.Default) {
+            repository.resetBeerList()
+        }
     }
 }

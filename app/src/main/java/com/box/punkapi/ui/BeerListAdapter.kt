@@ -36,7 +36,6 @@ class BeerListAdapter(private val click: (beer: Beer, extra: FragmentNavigator.E
         }
     }
 
-
     companion object {
         private val BeerDiffUtil = object : DiffUtil.ItemCallback<Beer>() {
             override fun areItemsTheSame(oldItem: Beer, newItem: Beer): Boolean =
