@@ -3,8 +3,8 @@ package com.box.punkapi.utils
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 
-fun String.toBold(): String = "<b>$this</b>"
-fun String.toH(oneToSix: Int): String {
+fun String.appendBoldTag(): String = "<b>$this</b>"
+fun String.appendHTag(oneToSix: Int): String {
     return when (oneToSix) {
         1 -> {
             "<h1>$this</h1>"

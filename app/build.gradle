@@ -21,13 +21,30 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-rules.pro'
+            proguardFile 'proguard-common.pro'
+            proguardFile 'proguard-retrofit2.pro'
+            proguardFile 'proguard-gson.pro'
+            proguardFile 'proguard-glide.pro'
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard-rules.pro'
+            proguardFile 'proguard-common.pro'
+            proguardFile 'proguard-retrofit2.pro'
+            proguardFile 'proguard-gson.pro'
+            proguardFile 'proguard-glide.pro'
+
         }
     }
 
-    buildFeatures{
-        dataBinding=true
+    buildFeatures {
+        dataBinding = true
     }
 
     compileOptions {

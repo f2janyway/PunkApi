@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private fun setGraphViewControl(){
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
         navHostFragment.navController.addOnDestinationChangedListener { controller, destination, arguments ->
+
+
             when(destination.id){
                 R.id.beerDetailFragment->{
                     supportActionBar?.apply {

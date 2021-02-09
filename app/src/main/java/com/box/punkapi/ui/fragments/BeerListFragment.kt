@@ -1,6 +1,8 @@
 package com.box.punkapi.ui.fragments
 
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.transition.TransitionListenerAdapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -56,12 +58,14 @@ class BeerListFragment : Fragment() {
         super.onResume()
         setScrollListener()
     }
-    private fun setRecyclerView(){
+
+    private fun setRecyclerView() {
         binding.listRecyclerview.apply {
             adapter = this@BeerListFragment.adapter
             postponeEnterTransition()
             viewTreeObserver.addOnPreDrawListener {
                 startPostponedEnterTransition()
+
                 true
             }
         }
@@ -74,13 +78,11 @@ class BeerListFragment : Fragment() {
                 is Result.Success -> {
                     adapter.submitList(it.data)
                     adapter.notifyDataSetChanged()
-                    Log.d("BeerListFragment", "setObserves:${it.data.count()} <<")
                     page++
                 }
                 is Result.Error -> {
                     //error handling
                     Toast.makeText(context, "${it.exception.message}", Toast.LENGTH_SHORT).show()
-                    throw it.exception
                 }
             }
         }

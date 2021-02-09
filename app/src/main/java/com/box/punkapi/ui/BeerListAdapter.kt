@@ -29,8 +29,7 @@ class BeerListAdapter(private val click: (beer: Beer, extra: FragmentNavigator.E
             it.findViewById<ImageView>(R.id.item_imageView).apply {
                 transitionName = item.id.toString()
                 val extra = FragmentNavigatorExtras(
-                    this to transitionName,
-
+                    this to transitionName
                 )
                 click(item, extra)
             }

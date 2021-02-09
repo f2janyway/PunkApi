@@ -1,7 +1,9 @@
 package com.box.punkapi.ui.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +20,13 @@ import com.box.punkapi.model.Malt
 import com.box.punkapi.ui.FoodPairingAdapter
 import com.box.punkapi.ui.MainActivity
 import com.box.punkapi.utils.setHtmlText
-import com.box.punkapi.utils.toBold
-import com.box.punkapi.utils.toH
+import com.box.punkapi.utils.appendBoldTag
+import com.box.punkapi.utils.appendHTag
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.transition.MaterialContainerTransform
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +44,7 @@ class BeerDetailFragment : Fragment() {
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             duration = 600
         }
+
     }
 
     override fun onCreateView(
@@ -63,6 +70,29 @@ class BeerDetailFragment : Fragment() {
 
             Glide.with(context)
                 .load(selectedBeer.image_url)
+                .listener(object :RequestListener<Drawable>{
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        startPostponedEnterTransition()
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        startPostponedEnterTransition()
+                        return false
+                    }
+
+                })
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(this)
 
@@ -106,18 +136,18 @@ class BeerDetailFragment : Fragment() {
         selectedBeer.method.apply {
             this.mash_temp.forEach {
                 val eachItem =
-                    "${"Temp".toBold()}:${it.temp.value}${it.temp.unit}  ${"Duration".toBold()}:${it.duration}"
+                    "${"Temp".appendBoldTag()}:${it.temp.value}${it.temp.unit}  ${"Duration".appendBoldTag()}:${it.duration}"
                 list.add(eachItem)
             }
             if (this.fermentation != null) {
                 val fermentationTemp = this.fermentation.temp
                 list.add(
-                    "${"Fermentation".toBold()}\n" +
+                    "${"Fermentation".appendBoldTag()}\n" +
                             "Temp:${fermentationTemp.value}${fermentationTemp.unit}"
                 )
             }
             if (this.twist != null) {
-                list.add("${"Twist".toBold()}:${this.twist}")
+                list.add("${"Twist".appendBoldTag()}:${this.twist}")
             }
         }
         return list
@@ -127,14 +157,14 @@ class BeerDetailFragment : Fragment() {
     private fun setHorizontalView() {
         val textView = binding.detailInclude.detailNumSingleValuesInclude.singlesNumTextView
 
-        val contents = "${getString(R.string.abv).toBold()}:${selectedBeer.abv}\t\t\t\t" +
-                "${getString(R.string.ibu).toBold()}:${selectedBeer.ibu}\t\t\t\t" +
-                "${getString(R.string.target_fg).toBold()}:${selectedBeer.target_fg}\t\t\t\t" +
-                "${getString(R.string.target_og).toBold()}:${selectedBeer.target_og}\t\t\t\t" +
-                "${getString(R.string.ebc).toBold()}:${selectedBeer.ebc}\t\t\t\t" +
-                "${getString(R.string.srm).toBold()}:${selectedBeer.srm}\t\t\t\t" +
-                "${getString(R.string.ph).toBold()}:${selectedBeer.ph}\t\t\t\t" +
-                "${getString(R.string.attenuation_level).toBold()}:${selectedBeer.attenuation_level}\t\t\t\t"
+        val contents = "${getString(R.string.abv).appendBoldTag()}:${selectedBeer.abv}\t\t\t\t" +
+                "${getString(R.string.ibu).appendBoldTag()}:${selectedBeer.ibu}\t\t\t\t" +
+                "${getString(R.string.target_fg).appendBoldTag()}:${selectedBeer.target_fg}\t\t\t\t" +
+                "${getString(R.string.target_og).appendBoldTag()}:${selectedBeer.target_og}\t\t\t\t" +
+                "${getString(R.string.ebc).appendBoldTag()}:${selectedBeer.ebc}\t\t\t\t" +
+                "${getString(R.string.srm).appendBoldTag()}:${selectedBeer.srm}\t\t\t\t" +
+                "${getString(R.string.ph).appendBoldTag()}:${selectedBeer.ph}\t\t\t\t" +
+                "${getString(R.string.attenuation_level).appendBoldTag()}:${selectedBeer.attenuation_level}\t\t\t\t"
         textView.setHtmlText(contents)
     }
 
@@ -149,16 +179,16 @@ class BeerDetailFragment : Fragment() {
     }
     private fun addYeast(linearLayout: LinearLayout,yeast:String){
         val textView = TextView(requireContext()).apply {
-            setHtmlText("${"Yeast".toH(4)}$yeast")
+            setHtmlText("${"Yeast".appendHTag(4)}$yeast")
         }
         linearLayout.addView(textView)
     }
     private fun addMaltToLinearLayout(linearLayout: LinearLayout, list: List<Malt>){
         val sb = StringBuilder()
-        sb.append("Malt".toH(4))
+        sb.append("Malt".appendHTag(4))
         list.forEachIndexed { index, malt ->
-            sb.append( "${"Name".toBold()}:${malt.name}<br>" +
-                    "${"Amount".toBold()}:${malt.amount.value}${malt.amount.unit}<br>"
+            sb.append( "${"Name".appendBoldTag()}:${malt.name}<br>" +
+                    "${"Amount".appendBoldTag()}:${malt.amount.value}${malt.amount.unit}<br>"
             )
             if(index == list.count() - 1)
                 sb.append("\n")
@@ -172,12 +202,12 @@ class BeerDetailFragment : Fragment() {
 
     private fun addHopsToLinearLayout(linearLayout: LinearLayout, list: List<Hops>){
         val sb = StringBuilder()
-        sb.append("<br>Hops".toH(4))
+        sb.append("<br>Hops".appendHTag(4))
         list.forEach { hopes ->
-            sb.append( "${"Name".toBold()}:${hopes.name}<br>" +
-                    "${"Amount".toBold()}:${hopes.amount.value}${hopes.amount.unit}<br>" +
-                    "${"Add".toBold()}:${hopes.add}<br>" +
-                    "${"Middle".toBold()}:${hopes.attribute}<br>"
+            sb.append( "${"Name".appendBoldTag()}:${hopes.name}<br>" +
+                    "${"Amount".appendBoldTag()}:${hopes.amount.value}${hopes.amount.unit}<br>" +
+                    "${"Add".appendBoldTag()}:${hopes.add}<br>" +
+                    "${"Middle".appendBoldTag()}:${hopes.attribute}<br>"
             )
             val textView = TextView(requireContext()).apply {
                 setHtmlText(sb.toString())

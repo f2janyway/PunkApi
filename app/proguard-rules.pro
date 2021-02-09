@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontobfuscate                              #난독화를 수행하지 않도록 함
+-keepattributes SoureFile,LineNumberTable   #소스파
+
+-printconfiguration ~/tmp/full-r8-config.txt
+
+-assumenosideeffects class android.util.Log {
+  public static *** v(...);
+  public static *** d(...);
+  public static *** i(...);
+  public static *** w(...);
+  public static *** e(...);
+}
