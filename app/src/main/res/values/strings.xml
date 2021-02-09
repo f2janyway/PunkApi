@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PunkApi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="beer_list_item_image_desc">beer_list_item_image</string>
+    <string name="description">Description</string>
+    <string name="abv">abv</string>
+    <string name="ibu">ibu</string>
+    <string name="target_fg">target_fg</string>
+    <string name="target_og">target_og</string>
+    <string name="ebc">ebc</string>
+    <string name="srm">srm</string>
+    <string name="ph">ph</string>
+    <string name="attenuation_level">attenuation_level</string>
+    <string name="beerSingleValues">Beer Single Values</string>
+    <string name="volume">Volume</string>
+    <string name="boil_volume">Boil volume</string>
+    <string name="method">Method</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="brewers_tips">Brewers Tips</string>
+    <string name="contributed_by">Contributed by</string>
+    <string name="food_pairing">Food pairing</string>
+</resources>
